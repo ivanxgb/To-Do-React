@@ -4,26 +4,10 @@ import { TodoSearch } from "../TodoSearch/TodoSearch";
 import { TodoList } from "../TodoList/TodoList";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { CreateTodoButton } from "../CreateTodoButton/CreateTodoButton";
-
-const defaultTodos = [
-  { text: "Cortar cebolla", completed: true },
-  { text: "Curso Intro a React", completed: false },
-  { text: "Curso React Codecademy", completed: false },
-];
-
-function useLocalStorage() {}
+import { useLocalStorage } from "../../utils/CustomHooks/CustomHooks";
 
 function App() {
-  const localStorageTodos = localStorage.getItem("TODOS_V1");
-  let parsedTodos;
-  if (!localStorageTodos) {
-    localStorage.setItem("TODOS_V1", JSON.stringify([]));
-    parsedTodos = [];
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos);
-  }
-
-  const [todos, setTodos] = useState(parsedTodos);
+  const [todos, saveTodos] = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = useState("");
 
   const completedTodos = todos.filter((todo) => todo.completed).length;
@@ -35,12 +19,6 @@ function App() {
       : todos.filter((todo) =>
           todo.text.toLowerCase().includes(searchValue.toLowerCase())
         );
-
-  const saveTodos = (todosToSave) => {
-    const stringifiedTodos = JSON.stringify(todosToSave);
-    localStorage.setItem("TODOS_V1", stringifiedTodos);
-    setTodos(todosToSave);
-  };
 
   const toggleTodo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
