@@ -1,38 +1,36 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { TodoContext } from "../TodoContext/TodoContext";
 import { TodoCounter } from "../TodoCounter/TodoCounter";
 import { TodoSearch } from "../TodoSearch/TodoSearch";
 import { TodoList } from "../TodoList/TodoList";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { CreateTodoButton } from "../CreateTodoButton/CreateTodoButton";
 
-function AppContainer({
-  completed,
-  totalTodos,
-  searchValue,
-  setSearchValue,
-  todos,
-  toggleTodo,
-  deleteTodo,
-}) {
+function AppContainer() {
   return (
-    <React.Fragment>
-      <TodoCounter completed={completed} total={totalTodos} />
-      <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+    <>
+      <TodoCounter />
+      <TodoSearch />
 
-      <TodoList>
-        {}
+      <TodoContext.Consumer>
+        {({ error, loading, searchedTodos, toggleTodo, deleteTodo }) => (
+          <TodoList>
+            {error && <p>Lo sentimos, hubo un error al traer los ToDo's</p>}
+            {loading && <p>Cargando...</p>}
+            {searchedTodos.map((todo, index) => (
+              <TodoItem
+                todo={todo}
+                key={index}
+                onComplete={toggleTodo}
+                onDelete={deleteTodo}
+              />
+            ))}
+          </TodoList>
+        )}
+      </TodoContext.Consumer>
 
-        {todos.map((todo, index) => (
-          <TodoItem
-            todo={todo}
-            key={index}
-            onComplete={toggleTodo}
-            onDelete={deleteTodo}
-          />
-        ))}
-      </TodoList>
       <CreateTodoButton />
-    </React.Fragment>
+    </>
   );
 }
 
