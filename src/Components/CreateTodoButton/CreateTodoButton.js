@@ -7,11 +7,9 @@ function CreateTodoButton() {
   };
 
   return (
-    <>
-      <button className="CreateTodoButton" onClick={handleClick}>
-        +
-      </button>
-    </>
+    <button className="CreateTodoButton" onClick={handleClick}>
+      +
+    </button>
   );
 }
 
