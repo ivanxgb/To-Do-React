@@ -1,29 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TodoItem.css";
 
-function TodoItem(props) {
-  const { text, completed } = props.todo;
+function TodoItem({ todo, onComplete, onDelete }) {
+  const { text, completed } = todo;
+  const [checked, setChecked] = useState(completed);
 
-  const onComplete = () => {
-    props.onComplete(text);
+  const handleChange = () => {
+    setChecked(!checked);
+    onComplete(text);
   };
 
-  const onDelete = () => {
-    props.onDelete(text);
+  const handleDelete = () => {
+    onDelete(text);
   };
 
   return (
     <li className="TodoItem">
-      <span
-        className={`Icon Icon-check ${completed && "Icon-check--active"}`}
-        onClick={onComplete}
-      >
-        C
-      </span>
+      <input type="checkbox" checked={checked} onChange={handleChange} />
       <p className={`TodoItem-p ${completed && "TodoItem-p--complete"}`}>
         {text}
       </p>
-      <span className="Icon Icon-delete" onClick={onDelete}>
+      <span className="Icon Icon-delete" onClick={handleDelete}>
         X
       </span>
     </li>

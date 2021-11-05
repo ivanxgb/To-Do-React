@@ -5,6 +5,7 @@ import { TodoSearch } from "../TodoSearch/TodoSearch";
 import { TodoList } from "../TodoList/TodoList";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { Modal } from "../Modal/Modal";
+import { TodoForm } from "../TodoForm/TodoForm";
 import { CreateTodoButton } from "../CreateTodoButton/CreateTodoButton";
 
 function AppContainer() {
@@ -39,9 +40,7 @@ function AppContainer() {
 
       {openModal && (
         <Modal>
-          {searchedTodos?.map((todo, i) => (
-            <p key={i}>{todo.text}</p>
-          ))}
+          <TodoForm />
         </Modal>
       )}
 

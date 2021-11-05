@@ -6,7 +6,7 @@ function useLocalStorage(itemName, initialValue) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const time = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       try {
         const localStorageItem = localStorage.getItem(itemName);
         let parsedItem;
@@ -22,9 +22,8 @@ function useLocalStorage(itemName, initialValue) {
         setError(e);
       }
     }, 1000);
-
-    return () => clearTimeout(time);
-  }, [item]);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const saveItem = (newItem) => {
     try {
